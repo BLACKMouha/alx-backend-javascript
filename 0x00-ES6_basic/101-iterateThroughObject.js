@@ -1,7 +1,7 @@
 export default function iterateThroughObject(reportWithIterator) {
     let string = '';
     for (const employee of reportWithIterator) {
-        string += employee + '|';
+        string += employee + '| ';
     }
-    return string.slice(0, -1);
+    return string.slice(0, -2);
 }

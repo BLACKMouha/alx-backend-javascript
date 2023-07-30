@@ -3,11 +3,10 @@ export default class Building {
     if (typeof (sqft) === 'number') {
       // eslint-disable-next-line no-underscore-dangle
       this._sqft = sqft;
+      if (this.evacuationWarningMessage !== Building.prototype.evacuationWarningMessage) {
+        throw new Error('Class extending Building must override evacuationWarningMessage');
+      }
     } else throw new Error('Sqft must be a number');
-
-    if (this.evacuationWarningMessage === Building.prototype.evacuationWarningMessage) {
-      throw new Error('Class extending Building must override evacuationWarningMessage');
-    }
   }
 
   get sqft() {
@@ -22,8 +21,6 @@ export default class Building {
   }
 
   evacuationWarningMessage() {
-    if (this.constructor === Building) {
-      throw new Error('Class extending Building must override evacuationWarningMessage');
-    }
+    throw new Error('Class extending Building must override evacuationWarningMessage');
   }
 }

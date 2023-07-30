@@ -3,13 +3,7 @@ import Building from './5-building';
 const b = new Building(100);
 console.log(b);
 
-class TestBuilding extends Building {
-  evacuationWarningMessage() {
-    return 'hello';
-  }
-}
-
-console.log(TestBuilding.prototype);
+class TestBuilding extends Building {}
 
 try {
   // eslint-disable-next-line no-new

@@ -6,8 +6,8 @@ console.log(b);
 class TestBuilding extends Building {}
 
 try {
-    new TestBuilding(200)
-}
-catch(err) {
-    console.log(err);
+  // eslint-disable-next-line no-new
+  new TestBuilding(200);
+} catch (err) {
+  console.log(err);
 }

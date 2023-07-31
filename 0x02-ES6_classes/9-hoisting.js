@@ -1,12 +1,9 @@
 export class HolbertonClass {
   constructor(year, location) {
     // eslint-disable-next-line no-underscore-dangle
-    if (typeof year === 'number') this._year = year;
-    else throw new Error('Year must be a number');
-
+    this._year = year;
     // eslint-disable-next-line no-underscore-dangle
-    if (typeof location === 'string') this._location = location;
-    else throw new Error('Location must be a string');
+    this._location = location;
   }
 
   get year() {
@@ -23,16 +20,11 @@ export class HolbertonClass {
 export class StudentHolberton {
   constructor(firstName, lastName, holbertonClass) {
     // eslint-disable-next-line no-underscore-dangle
-    if (typeof firstName === 'string' ) this._firstName = firstName;
-    else throw new Error('Firstname must be a string');
-
+    this._firstName = firstName;
     // eslint-disable-next-line no-underscore-dangle
-    if (typeof lastName === 'string') this._lastName = lastName;
-    else throw new Error('Lastname must be a string');
-
+    this._lastName = lastName;
     // eslint-disable-next-line no-underscore-dangle
-    if (holbertonClass instanceof HolbertonClass) this._holbertonClass = holbertonClass;
-    else throw new Error('HolbertonClass must be an HolbertonClass instance');
+    this._holbertonClass = holbertonClass;
   }
 
   get fullName() {
@@ -47,7 +39,7 @@ export class StudentHolberton {
 
   get fullStudentDescription() {
     // eslint-disable-next-line no-underscore-dangle
-    return `${this.fullName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
+    return `${this._firstName} ${this._lastName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
   }
 }
 

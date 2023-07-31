@@ -47,7 +47,7 @@ export class StudentHolberton {
 
   get fullStudentDescription() {
     // eslint-disable-next-line no-underscore-dangle
-    return `${this._firstName} ${this._lastName} - ${this._holbertonClass._year} - ${this._holbertonClass._location}`;
+    return `${this.fullName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
   }
 }
 

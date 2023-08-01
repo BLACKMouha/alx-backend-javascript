@@ -1,14 +1,18 @@
 /* jshint esversion: 6 */
 
 export default function cleanSet(set, startString) {
-  if (!(set instanceof Set) || (typeof startString !== 'string')
-    || startString.length === 0) return '';
+  const cleanString = [];
 
-  const cleanArray = [];
+  if (!(set instanceof Set) || (typeof startString !== 'string')
+      || (typeof startString === 'string' && startString.length === 0)) {
+    return '';
+  }
 
   set.forEach((string) => {
-    if (string.startsWith(startString)) cleanArray.push(string.slice(startString.length));
+    if (string && string.startsWith(startString)) {
+      cleanString.push(string.slice(startString.length));
+    }
   });
 
-  return cleanArray.join('-');
+  return cleanString.join('-');
 }

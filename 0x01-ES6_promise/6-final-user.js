@@ -13,7 +13,7 @@ export default function handleProfileSignup(firstName, lastName, filename) {
         } else {
           r.push({
             status: i.status,
-            value: `Error: ${filename} cannot be processed`
+            value: `Error: ${filename} cannot be processed`,
           });
         }
       }

@@ -1,0 +1,8 @@
+node_modules/
+.eslin*.js
+babel.config.js
+package*.json
+.hintrc
+*npm*
+*.csv
+*main*

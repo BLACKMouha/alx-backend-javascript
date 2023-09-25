@@ -4,9 +4,9 @@ const process = require('process');
 
 function displayMessage() {
   if (process.argv.length >= 3) {
-    console.log(process.argv[2]);
+    process.stdout.write(process.argv[2] + '\n');
   } else {
-    console.log('Hello NodeJS!');
+    process.stdout.write('Hello NodeJS!\n');
   }
 }
 displayMessage();

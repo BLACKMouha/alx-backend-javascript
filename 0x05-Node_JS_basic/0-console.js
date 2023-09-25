@@ -1,12 +1,6 @@
 /* jshint esversion: 8 */
-const process = require('process');
+const displayMessage = (msg) => {
+  console.log(msg);
+};
 
-function displayMessage() {
-  if (process.argv.length >= 3) {
-    process.stdout.write(`${process.argv[2]}\n`);
-  } else {
-    process.stdout.write('Hello NodeJS!\n');
-  }
-}
-
-displayMessage();
+module.exports = displayMessage;

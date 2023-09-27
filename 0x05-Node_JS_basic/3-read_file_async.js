@@ -25,6 +25,9 @@ const countStudents = function countStudents(filePath) {
         console.log(`Number of students: ${listSWE.length + listCS.length}`);
         console.log(`Number of students in CS: ${listCS.length}. List: ${listCS.join(', ')}`);
         console.log(`Number of students in SWE: ${listSWE.length}. List: ${listSWE.join(', ')}`);
+        const s = `Number of students: ${listSWE.length + listCS.length}
+Number of students in CS: ${listCS.length}. List: ${listCS.join(', ')}
+Number of students in SWE: ${listSWE.length}. List: ${listSWE.join(', ')}`;
         resolve(data);
       }
     });

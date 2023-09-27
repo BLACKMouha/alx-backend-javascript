@@ -22,9 +22,9 @@ const countStudents = function countStudents(filePath) {
             }
           }
         }
-        let s = `Number of students: ${listSWE.length + listCS.length}\n`;
-        s += `Number of students in CS: ${listCS.length}. List: ${listCS.join(', ')}\n`;
-        s += `Number of students in SWE: ${listSWE.length}. List: ${listSWE.join(', ')}`;
+        const s = `Number of students: ${listCS.length + listSWE.length}
+Number of students in CS: ${listCS.length}. List: ${listCS.join(', ')}
+Number of students in SWE: ${listSWE.length}. List: ${listSWE.join(', ')}`;
         console.log(s);
         resolve(s);
       }

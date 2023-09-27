@@ -3,11 +3,11 @@
 const http = require('http');
 const countStudents = require('./3-read_file_async');
 
-function handleRoutes(res) {
+async function handleRoutes(res) {
   if (res.req.url === '/students' && res.req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.write('This is the list of our students\n');
-    countStudents(process.argv[2])
+    await countStudents(process.argv[2])
       .then((s) => {
         res.end(`${s}`);
       })

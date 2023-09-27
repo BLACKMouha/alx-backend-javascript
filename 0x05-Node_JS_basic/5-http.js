@@ -3,20 +3,18 @@
 const http = require('http');
 const countStudents = require('./3-read_file_async');
 
-async function handleRoutes(res) {
-  try {
-    if (res.req.url === '/students' && res.req.method === 'GET') {
-      const data = await countStudents(process.argv[2]);
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(`This is the list of our students\n${data}`);
-    } else {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('Hello Holberton School!');
-    }
-  } catch (error) {
-    res.writeHead(500, { 'Content-Type': 'text/plain' });
-    res.end(error.toString());
-    console.error(error.toString());
+function handleRoutes(res) {
+  if (res.req.url === '/students' && res.req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('This is the list of our students\n');
+    countStudents(process.argv[2])
+      .then((s) => {
+        res.end(`${s}`);
+      })
+      .catch((e) => { res.end(e.message); });
+  } else {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello Holberton School!');
   }
 }
 

@@ -39,7 +39,7 @@ const countStudents = function countStudents(filePath) {
         }
         s = s.slice(0, s.length - 1);
         console.log(s);
-        resolve(s);
+        resolve({ s: s, DATA: studentsPerField });
       }
     });
   });

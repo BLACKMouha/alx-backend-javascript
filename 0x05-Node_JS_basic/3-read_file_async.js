@@ -7,27 +7,38 @@ const countStudents = function countStudents(filePath) {
       if (err) {
         reject(Error('Cannot load the database'));
       } else {
+        const studentsPerField = {};
         const rows = data.split('\n');
-        const listCS = [];
-        const listSWE = [];
-        for (let i = 1; i < rows.slice(1).length; i += 1) {
-          if (rows[i] !== '') {
-            const values = rows[i].split(',');
+        for (let idx = 1; idx < rows.length; idx += 1) {
+          const row = rows[idx];
+          if (row) {
+            const values = row.split(',');
             const firstName = values[0];
             const field = values[3];
-            if (field.toUpperCase() === 'CS') {
-              listCS.push(firstName);
+            if (Object.prototype.hasOwnProperty.call(studentsPerField, field)) {
+              (studentsPerField[field]).push(firstName);
             } else {
-              listSWE.push(firstName);
+              (studentsPerField[field]) = [firstName];
+            }
+            if (Object.prototype.hasOwnProperty.call(studentsPerField, 'numberOfStudents')) {
+              studentsPerField.numberOfStudents += 1;
+            } else {
+              studentsPerField.numberOfStudents = 1;
             }
           }
         }
-        console.log(`Number of students: ${listSWE.length + listCS.length}`);
-        console.log(`Number of students in CS: ${listCS.length}. List: ${listCS.join(', ')}`);
-        console.log(`Number of students in SWE: ${listSWE.length}. List: ${listSWE.join(', ')}`);
-        const s = `Number of students: ${listSWE.length + listCS.length}
-Number of students in CS: ${listCS.length}. List: ${listCS.join(', ')}
-Number of students in SWE: ${listSWE.length}. List: ${listSWE.join(', ')}`;
+        let s = '';
+        s += `Number of students: ${studentsPerField.numberOfStudents}\n`;
+
+        for (const i in studentsPerField) {
+          if (i !== 'numberOfStudents') {
+            const numberOfStudents = (studentsPerField[i]).length;
+            const list = (studentsPerField[i]).join(', ');
+            s += `Number of students in ${i}: ${numberOfStudents}. List: ${list}\n`;
+          }
+        }
+        s = s.slice(0, s.length - 1);
+        console.log(s);
         resolve(s);
       }
     });

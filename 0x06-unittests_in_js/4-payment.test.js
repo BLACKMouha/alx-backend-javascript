@@ -71,23 +71,35 @@ describe('calculNumber utils.js', function () {
 });
 
 describe('sendPaymentRequestToApi', function () {
-  let calculateNumberSpy;
+  let calculateNumberStub;
   let consoleSpy;
 
   beforeEach(() => {
-    calculateNumberSpy = sinon.spy(Utils, 'calculateNumber');
+    calculateNumberStub = sinon.stub(Utils, 'calculateNumber').callsFake((type, a, b) => {
+      switch (type) {
+        case 'SUM':
+          return Math.round(a) + Math.round(b);
+        case 'SUBTRACT':
+          return Math.round(a) - Math.round(b);
+        case 'DIVIDE':
+          if (Math.round(b) === 0) return 'Error';
+          return Math.round(a) / Math.round(b);
+        default:
+          break;
+      }
+    });
     consoleSpy = sinon.spy(console, 'log');
   });
 
   afterEach(() => {
-    calculateNumberSpy.restore();
+    calculateNumberStub.restore();
     consoleSpy.restore();
   });
 
   it("should inspect calling sendPaymentRequestToApi is the same as Utils.calculateNumber('SUM', totalAmount, totalShipping')", function () {
     sendPaymentRequestToApi(100, 20);
-    expect(calculateNumberSpy.calledOnceWith('SUM', 100, 20)).to.be.true;
-    expect(calculateNumberSpy('SUM', 100, 20)).to.equal(120);
+    expect(calculateNumberStub.calledOnceWith('SUM', 100, 20)).to.be.true;
+    expect(calculateNumberStub('SUM', 100, 20)).to.equal(120);
   });
 
   it('logs to the console the right result of a call sendPaymentRequstToApi', function () {
@@ -102,7 +114,7 @@ describe('sendPaymentRequestToApi', function () {
       }
     );
     sendPaymentRequestToApiSpy(120, 30);
-    expect(calculateNumberSpy.called).to.be.false;
+    expect(calculateNumberStub.called).to.be.false;
   });
 });
 

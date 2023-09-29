@@ -6,6 +6,27 @@ const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
 
 describe('calculNumber utils.js', function () {
+  let calculateNumberStub;
+
+  beforeEach(() => {
+    calculateNumberStub = sinon.stub(Utils, 'calculateNumber').callsFake((type, a, b) => {
+      switch (type) {
+        case 'SUM':
+          return Math.round(a) + Math.round(b);
+        case 'SUBTRACT':
+          return Math.round(a) - Math.round(b);
+        case 'DIVIDE':
+          if (Math.round(b) === 0) return 'Error';
+          return Math.round(a) / Math.round(b);
+        default:
+          break;
+      }
+    });
+  });
+
+  afterEach(() => {
+    calculateNumberStub.restore();
+  });
   describe('calculNumber of type SUM', function () {
     it('should return the sum of two rounded numbers', function () {
       // I-/ Testing addition

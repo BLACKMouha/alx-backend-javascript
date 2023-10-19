@@ -3,8 +3,9 @@
 import express from 'express';
 import linkRoutes from './routes';
 
-const port = 1245;
+const port = 1246;
 const app = express();
+app.use(express.json());
 
 linkRoutes(app);
 

@@ -1,26 +1,23 @@
 /* jshint esversion: 8 */
 
-import url from 'url';
 import readDatabase from '../utils';
-
-const filePath = process.argv[2] || '';
 
 class StudentsController {
   static getAllStudents(req, res) {
-    readDatabase(filePath)
+    readDatabase(process.argv[2].toString())
       .then((studentsPerFields) => {
-        const sortedKeys = Array.from(Object.keys(studentsPerFields)).sort((a, b) => {
-          a.localeCompare(b, 'en', { sensitivity: 'base' });
-        });
+        const sortedKeys = Array.from(Object.keys(studentsPerFields)).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
         const orderedStudentsPerFields = {};
         sortedKeys.forEach((key) => {
           orderedStudentsPerFields[key] = studentsPerFields[key];
         });
         let s = 'This is the list of our students\n';
         for (const i in orderedStudentsPerFields) {
-          const numberOfStudents = (orderedStudentsPerFields[i]).length;
-          const list = (orderedStudentsPerFields[i]).join(', ');
-          s += `Number of students in ${i}: ${numberOfStudents}. List: ${list}\n`;
+          if (i) {
+            const numberOfStudents = (orderedStudentsPerFields[i]).length;
+            const list = (orderedStudentsPerFields[i]).join(', ');
+            s += `Number of students in ${i}: ${numberOfStudents}. List: ${list}\n`;
+          }
         }
         s = s.slice(0, s.length - 1);
         res.status(200).send(s);
@@ -32,19 +29,22 @@ class StudentsController {
   }
 
   static getAllStudentsByMajor(req, res) {
-    const urlParts = url.parse(req.url, true).split('/');
-    const major = urlParts[2] || '';
+    const { major } = req.params;
+
     if (!major) {
       this.getAllStudents(req, res);
       return;
     }
-    readDatabase(filePath)
+    readDatabase(process.argv[2].toString())
       .then((data) => {
-        const numberOfStudents = (data[major]).length;
+        if (major && !(major in data)) {
+          res.status(500).send('Major parameter must be CS or SWE');
+          return;
+        }
         const listOfStudents = (data[major]).join(', ');
-        s += `Number of students in ${i}: ${numberOfStudents}. List: ${listOfStudents}\n`;
+        res.status(200).send(`List: ${listOfStudents}`);
       })
-      .catch((e) => {
+      .catch(() => {
         res.status(500).send('Cannot load the database');
       });
   }

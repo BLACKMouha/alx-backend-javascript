@@ -47,7 +47,7 @@ describe('testing cart route of the payment system API', function () {
 });
 
 describe('Testing POST request of /login endpoint', function () {
-  it('should send the message "Welcome Betty"', function (done) {
+  it('should send the message "Welcome Betty" when userName is defined', function (done) {
     const options = {
       uri: 'http://localhost:7865/login',
       method: 'POST',
@@ -58,13 +58,24 @@ describe('Testing POST request of /login endpoint', function () {
       done();
     });
   });
-  it('should send the message "Welcome "', function (done) {
+  it('should send 404 status code when userName is empty', function (done) {
+    const options = {
+      uri: 'http://localhost:7865/login',
+      method: 'POST',
+      json: { userName: '' },
+    }
+    request(options, function (err, res, body) {
+      expect(res.statusCode).to.equal(404);
+      done();
+    });
+  });
+  it('should send 404 status code when userName is not defined', function (done) {
     const options = {
       uri: 'http://localhost:7865/login',
       method: 'POST',
     }
     request(options, function (err, res, body) {
-      expect(body).to.equal('Welcome ');
+      expect(res.statusCode).to.equal(404);
       done();
     });
   });
@@ -74,7 +85,7 @@ describe('Testing GET request /available_payments endpoint', function () {
   it('should show the right content', function (done) {
     request.get('http://localhost:7865/available_payments', function (err, res, body) {
       console.log(body);
-      expect(body).to.equal('');
+      expect(body).to.equal('{"payment_methods":{"credit_cards":true,"paypal":false}}');
       done();
     });
   })

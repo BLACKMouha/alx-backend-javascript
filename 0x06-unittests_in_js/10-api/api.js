@@ -17,6 +17,7 @@ app.get('/cart/:id([0-9]+)', (req, res) => {
 });
 
 app.get('/available_payments', (req, res) => {
+  res.set("Content-Type", "application/json");
   res.json({
     payment_methods: {
       credit_cards: true,
@@ -27,7 +28,8 @@ app.get('/available_payments', (req, res) => {
 
 app.post('/login', (req, res) => {
   const userName = req.body.userName || ''
-  res.send(`Welcome ${userName}`)
+  if (userName && userName !== '') res.send(`Welcome ${userName}`)
+  else res.status(404).send();
 })
 
 app.listen(port, () => console.log(`API available on localhost port ${port}`));

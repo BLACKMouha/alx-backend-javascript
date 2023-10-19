@@ -3,17 +3,18 @@ const request = require('request');
 const chai = require('chai');
 const expect = chai.expect;
 
-describe('testing root route of the payment system API', function () {
+describe('testing the payment system API', function () {
+  const reqOptions = { url: 'http://localhost:7865/', method: 'GET' };
 
   it('should have a successful status code when the homepage is reached', function (done) {
-    request.get('http://localhost:7865/', function (err, res, body) {
+    request(reqOptions, function (err, res, body) {
       expect(res.statusCode).to.equal(200);
       done();
     });
   });
 
   it('should have a body message ("Welcome to the payment system") when the homepage is reached', function (done) {
-    request.get('http://localhost:7865/', function (err, res, body) {
+    request(reqOptions, function (err, res, body) {
       expect(body).to.equal('Welcome to the payment system');
       done();
     });
@@ -23,7 +24,7 @@ describe('testing root route of the payment system API', function () {
 describe('testing cart route of the payment system API', function () {
   it('should have a failure status code when the cart is reached without id', function (done) {
     request.get('http://localhost:7865/cart/', function (err, res, body) {
-      expect(res.statusCode).to.be.equal(404);
+      expect(res.statusCode).to.equal(404);
       done();
     });
   });

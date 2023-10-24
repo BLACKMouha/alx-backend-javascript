@@ -1,8 +1,8 @@
 /* jshint esversion: 8 */
 
+const url = require('url');
 const express = require('express');
 const countStudents = require('./3-read_file_async');
-const url = require('url');
 
 const filePath = process.argv[2] || '';
 
@@ -24,8 +24,7 @@ app.get('/students/:major?', (req, res) => {
       if (major) {
         const listOfStudents = data.DATA[major];
         res.end(`Number of students in ${major}: ${listOfStudents.length}. List: ${listOfStudents.join(', ')}`);
-      } else
-        res.end(data.s);
+      } else res.end(data.s);
     })
     .catch((e) => res.end(e.message));
 });
